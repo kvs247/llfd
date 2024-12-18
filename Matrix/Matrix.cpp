@@ -97,8 +97,19 @@ void Matrix::print(std::ostream &os) const
   }
 }
 
+double Matrix::at(size_t i, size_t j) const
+{
+  if (i >= this->nRows || j >= this->nCols)
+  {
+    throw std::out_of_range("Matrix index is outside of valid range");
+  }
+
+  return data[j + i * nCols];
+}
+
 // operators
-Matrix &Matrix::operator=(const Matrix &other) {
+Matrix &Matrix::operator=(const Matrix &other)
+{
   this->data = other.data;
   this->nRows = other.nRows;
   this->nCols = other.nCols;
@@ -116,8 +127,8 @@ bool Matrix::operator==(const Matrix &other) const
   return this->data == other.data;
 };
 
-
-Matrix &Matrix::operator+=(const Matrix &other) {
+Matrix &Matrix::operator+=(const Matrix &other)
+{
   if (!Matrix::isSameDimension(*this, other))
   {
     throw std::invalid_argument("Matrices must be equal dimension for addition");
@@ -132,7 +143,8 @@ Matrix &Matrix::operator+=(const Matrix &other) {
   return *this;
 };
 
-Matrix Matrix::operator+(const Matrix &other) const {
+Matrix Matrix::operator+(const Matrix &other) const
+{
   return Matrix(*this) += other;
 }
 
@@ -152,6 +164,41 @@ Matrix &Matrix::operator-=(const Matrix &other)
   return *this;
 }
 
-Matrix Matrix::operator-(const Matrix &other) const {
+Matrix Matrix::operator-(const Matrix &other) const
+{
   return Matrix(*this) -= other;
+}
+
+Matrix &Matrix::operator*=(const Matrix &other)
+{
+  if (this->nCols != other.nRows)
+  {
+    throw std::invalid_argument("Invalid shapes for matrix multiplication");
+  }
+
+  const auto newNRows = this->nRows;
+  const auto newNCols = other.nCols;
+  auto newData = std::vector<double>(newNRows * newNCols, 0.0);
+
+  for (size_t row = 0; row < newNRows; ++row)
+  {
+    for (size_t k = 0; k < this->nCols; ++k)
+    {
+      const auto thisMatrixValue = this->at(row, k);
+      for (size_t col = 0; col < newNCols; ++col)
+      {
+        newData[col + newNCols * row] += thisMatrixValue * other.at(k, col);
+      }
+    }
+  }
+
+  this->nRows = newNRows;
+  this->nCols = newNCols;
+  this->data = std::move(newData);
+
+  return *this;
+}
+
+Matrix Matrix::operator*(const Matrix &other) const {
+  return Matrix(*this) *= other;
 }

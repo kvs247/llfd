@@ -72,6 +72,27 @@ TEST(Matrix, IsSameDimension)
   EXPECT_FALSE(Matrix::isSameDimension(m2, m3));
 }
 
+// public methods
+TEST(Matrix, AtWithValidInput)
+{
+  Matrix m1({{1, 2}, {3, 4}, {5, 6}});
+
+  EXPECT_EQ(m1.at(0,0), 1);
+  EXPECT_EQ(m1.at(1,0), 3);
+  EXPECT_EQ(m1.at(2,0), 5);
+  EXPECT_EQ(m1.at(0,1), 2);
+  EXPECT_EQ(m1.at(1,1), 4);
+  EXPECT_EQ(m1.at(2,1), 6);
+}
+
+TEST(Matrix, AtWithInvalidInput)
+{
+  Matrix m1({{1, 2}, {3, 4}, {5, 6}});
+
+  EXPECT_THROW(m1.at(0, 2), std::out_of_range);
+  EXPECT_THROW(m1.at(3, 0), std::out_of_range);
+}
+
 // operators
 TEST(Matrix, Assignment)
 {
@@ -95,6 +116,25 @@ TEST(Matrix, MatrixEquality)
   EXPECT_FALSE(m1 == m4);
 }
 
+TEST(Matrix, CanPlusEqualTwoMatrices)
+{
+  Matrix m1({{1, 2}, {3, 4}, {5, 6}});
+  Matrix m2({{1, 0}, {-2, 3}, {0, -9}});
+
+  Matrix expectedMatrix({{2, 2}, {1, 7}, {5, -3}});
+
+  m1 += m2;
+  EXPECT_EQ(m1, expectedMatrix);
+}
+
+TEST(Matrix, CannotPlusEqualUnequalDimensionMatrices)
+{
+  Matrix m1({{0, 1}, {1, 0}, {0, 1}});
+  Matrix m2({{1, 0}, {0, 1}});
+
+  EXPECT_THROW(m1 += m2, std::invalid_argument);
+}
+
 TEST(Matrix, CanAddTwoMatrices)
 {
   Matrix m1({{1, 2}, {3, 4}, {5, 6}});
@@ -113,23 +153,23 @@ TEST(Matrix, CannotAddUnequalDimensionMatrices)
   EXPECT_THROW(m1 + m2, std::invalid_argument);
 }
 
-TEST(Matrix, CanPlusEqualTwoMatrices)
+TEST(Matrix, CanMinusEqualTwoMatrices)
 {
   Matrix m1({{1, 2}, {3, 4}, {5, 6}});
   Matrix m2({{1, 0}, {-2, 3}, {0, -9}});
 
-  Matrix expectedMatrix({{2, 2}, {1, 7}, {5, -3}});
+  Matrix expectedMatrix({{0, 2}, {5, 1}, {5, 15}});
 
-  m1 += m2;
+  m1 -= m2;
   EXPECT_EQ(m1, expectedMatrix);
 }
 
-TEST(Matrix, CannotPlusEqualUnequalDimensionMatrices)
+TEST(Matrix, CannotMinusEqualUnequalDimensionMatrices)
 {
   Matrix m1({{0, 1}, {1, 0}, {0, 1}});
   Matrix m2({{1, 0}, {0, 1}});
 
-  EXPECT_THROW(m1 += m2, std::invalid_argument);
+  EXPECT_THROW(m1 -= m2, std::invalid_argument);
 }
 
 TEST(Matrix, CanSubtractTwoMatrices)
@@ -150,21 +190,39 @@ TEST(Matrix, CannotSubtractUnequalDimensionMatrices)
   EXPECT_THROW(m1 - m2, std::invalid_argument);
 }
 
-TEST(Matrix, CanMinusEqualTwoMatrices)
+TEST(Matrix, CanStarEqualTwoMatrices)
 {
-  Matrix m1({{1, 2}, {3, 4}, {5, 6}});
-  Matrix m2({{1, 0}, {-2, 3}, {0, -9}});
+  Matrix m1({{1, 2, 3}, {4, 5, 6}});
+  Matrix m2({{0, 1, 1}, {2, 3, 5}, {8, 13, 21}});
 
-  Matrix expectedMatrix({{0, 2}, {5, 1}, {5, 15}});
+  Matrix expectedMatrix({{28, 46, 74}, {58, 97, 155}});
 
-  m1 -= m2;
+  m1 *= m2;
   EXPECT_EQ(m1, expectedMatrix);
 }
 
-TEST(Matrix, CannotMinusEqualUnequalDimensionMatrices)
+TEST(Matrix, CannotStarEqualInvalidMatrixDimensions)
 {
-  Matrix m1({{0, 1}, {1, 0}, {0, 1}});
-  Matrix m2({{1, 0}, {0, 1}});
+  Matrix m1({{1, 2}, {3, 4}, {5, 6}});
+  Matrix m2({{0, 1, 1}, {2, 3, 5}, {8, 13, 21}});
 
-  EXPECT_THROW(m1 -= m2, std::invalid_argument);
+  EXPECT_THROW(m1 *= m2, std::invalid_argument);
+}
+
+TEST(Matrix, CanMultiplyTwoMatrices)
+{
+  Matrix m1({{1, 2, 3}, {4, 5, 6}});
+  Matrix m2({{0, 1, 1}, {2, 3, 5}, {8, 13, 21}});
+
+  Matrix expectedMatrix({{28, 46, 74}, {58, 97, 155}});
+
+  EXPECT_EQ(m1 * m2, expectedMatrix);
+}
+
+TEST(Matrix, CannotMultiplyInvalidMatrixDimensions)
+{
+  Matrix m1({{1, 2}, {3, 4}, {5, 6}});
+  Matrix m2({{0, 1, 1}, {2, 3, 5}, {8, 13, 21}});
+
+  EXPECT_THROW(m1 * m2, std::invalid_argument);
 }

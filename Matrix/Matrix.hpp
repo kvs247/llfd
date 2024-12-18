@@ -22,6 +22,7 @@ public:
   static bool isSameDimension(const Matrix &m1, const Matrix &m2);
 
   void print(std::ostream &os) const;
+  double at(size_t i, size_t j) const;
 
   Matrix &operator=(const Matrix &);
   bool operator==(const Matrix &) const;
@@ -29,6 +30,9 @@ public:
   Matrix operator+(const Matrix &) const;
   Matrix &operator-=(const Matrix &);
   Matrix operator-(const Matrix &) const;
+  Matrix &operator*=(const Matrix &);
+  Matrix operator*(const Matrix &) const;
+
 
 private:
   size_t nRows = 0;
