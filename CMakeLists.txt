@@ -3,4 +3,5 @@ project(LaplacianLeaderFollowerDynamics)
 
 add_executable(llfd
   main.cpp
+  Matrix/Matrix.cpp
 )
