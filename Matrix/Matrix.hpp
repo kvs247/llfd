@@ -4,32 +4,23 @@
 #include <iostream>
 #include <stdexcept>
 
+using Vector2D = std::vector<std::vector<double>>;
+
 class Matrix
 {
 public:
   Matrix() = delete;
-  Matrix(const std::vector<std::vector<double>>);
+  Matrix(const Vector2D&);
 
-  void print(std::ostream &os) const
-  {
-    for (size_t i = 0; i < data.size(); ++i)
-    {
-      if (i % nCol == 0)
-      {
-        os << "|";
-      }
+  size_t getNRows() const;
+  size_t getNCols() const;
+  Vector2D getRows() const;
+  Vector2D getCols() const;
 
-      os << " " << data[i];
-
-      if ((i + 1) % nCol == 0)
-      {
-        os << " |\n";
-      }
-    }
-  }
+  void print(std::ostream &os) const;
 
 private:
-  const size_t nRow = 0;
-  const size_t nCol = 0;
+  const size_t nRows = 0;
+  const size_t nCols = 0;
   std::vector<double> data;
 };

@@ -20,6 +20,7 @@ enable_testing()
 add_executable(
   matrix_test
   Matrix/test.cpp
+  Matrix/Matrix.cpp
 )
 target_link_libraries(
   matrix_test 
