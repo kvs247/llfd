@@ -1,8 +1,8 @@
-#include <stdlib.h>
 #include <initializer_list>
-#include <vector>
 #include <iostream>
 #include <stdexcept>
+#include <stdlib.h>
+#include <vector>
 
 using Vector2D = std::vector<std::vector<double>>;
 
@@ -32,7 +32,6 @@ public:
   Matrix operator-(const Matrix &) const;
   Matrix &operator*=(const Matrix &);
   Matrix operator*(const Matrix &) const;
-
 
 private:
   size_t nRows = 0;

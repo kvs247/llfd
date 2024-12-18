@@ -11,16 +11,16 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(llfd
-main.cpp
-Matrix/Matrix.cpp
+  src/main.cpp
+  src/Matrix/Matrix.cpp
 )
 
 enable_testing()
 
 add_executable(
   matrix_test
-  Matrix/test.cpp
-  Matrix/Matrix.cpp
+  src/Matrix/test.cpp
+  src/Matrix/Matrix.cpp
 )
 target_link_libraries(
   matrix_test 

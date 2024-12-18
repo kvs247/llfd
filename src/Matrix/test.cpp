@@ -27,10 +27,7 @@ TEST(Matrix, CanCreateValidMatrix2D)
   EXPECT_EQ(m.getCols(), expectedCols);
 }
 
-TEST(Matrix, ThrowsOnCreateInvalidMatrix2D)
-{
-  EXPECT_THROW(Matrix m({{1, 2}, {3, 4, 5}}), std::invalid_argument);
-}
+TEST(Matrix, ThrowsOnCreateInvalidMatrix2D) { EXPECT_THROW(Matrix m({{1, 2}, {3, 4, 5}}), std::invalid_argument); }
 
 TEST(Matrix, CanCreateValidMatrix1D)
 {
@@ -55,10 +52,7 @@ TEST(Matrix, CanCreateValidMatrix1D)
   EXPECT_EQ(m.getCols(), expectedCols);
 }
 
-TEST(Matrix, ThrowsOnCreateInvalidMatrix1D)
-{
-  EXPECT_THROW(Matrix m({1, 2, 3, 4, 5}, 3, 2), std::invalid_argument);
-}
+TEST(Matrix, ThrowsOnCreateInvalidMatrix1D) { EXPECT_THROW(Matrix m({1, 2, 3, 4, 5}, 3, 2), std::invalid_argument); }
 
 // static methods
 TEST(Matrix, IsSameDimension)
@@ -77,12 +71,12 @@ TEST(Matrix, AtWithValidInput)
 {
   Matrix m1({{1, 2}, {3, 4}, {5, 6}});
 
-  EXPECT_EQ(m1.at(0,0), 1);
-  EXPECT_EQ(m1.at(1,0), 3);
-  EXPECT_EQ(m1.at(2,0), 5);
-  EXPECT_EQ(m1.at(0,1), 2);
-  EXPECT_EQ(m1.at(1,1), 4);
-  EXPECT_EQ(m1.at(2,1), 6);
+  EXPECT_EQ(m1.at(0, 0), 1);
+  EXPECT_EQ(m1.at(1, 0), 3);
+  EXPECT_EQ(m1.at(2, 0), 5);
+  EXPECT_EQ(m1.at(0, 1), 2);
+  EXPECT_EQ(m1.at(1, 1), 4);
+  EXPECT_EQ(m1.at(2, 1), 6);
 }
 
 TEST(Matrix, AtWithInvalidInput)

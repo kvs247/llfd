@@ -1,8 +1,8 @@
-#include <vector>
 #include <initializer_list>
-#include <stdexcept>
 #include <iostream>
 #include <span>
+#include <stdexcept>
+#include <vector>
 
 #include "Matrix.hpp"
 
@@ -30,7 +30,8 @@ Matrix::Matrix(const Vector2D &rows) : nRows(rows.size()), nCols(rows.begin()->s
   }
 }
 
-Matrix::Matrix(const std::vector<double> &eles, const size_t rows, const size_t cols) : nRows(rows), nCols(cols), data(eles)
+Matrix::Matrix(const std::vector<double> &eles, const size_t rows, const size_t cols)
+    : nRows(rows), nCols(cols), data(eles)
 {
   if (data.size() != rows * cols)
   {
@@ -143,10 +144,7 @@ Matrix &Matrix::operator+=(const Matrix &other)
   return *this;
 };
 
-Matrix Matrix::operator+(const Matrix &other) const
-{
-  return Matrix(*this) += other;
-}
+Matrix Matrix::operator+(const Matrix &other) const { return Matrix(*this) += other; }
 
 Matrix &Matrix::operator-=(const Matrix &other)
 {
@@ -164,10 +162,7 @@ Matrix &Matrix::operator-=(const Matrix &other)
   return *this;
 }
 
-Matrix Matrix::operator-(const Matrix &other) const
-{
-  return Matrix(*this) -= other;
-}
+Matrix Matrix::operator-(const Matrix &other) const { return Matrix(*this) -= other; }
 
 Matrix &Matrix::operator*=(const Matrix &other)
 {
@@ -199,6 +194,4 @@ Matrix &Matrix::operator*=(const Matrix &other)
   return *this;
 }
 
-Matrix Matrix::operator*(const Matrix &other) const {
-  return Matrix(*this) *= other;
-}
+Matrix Matrix::operator*(const Matrix &other) const { return Matrix(*this) *= other; }
