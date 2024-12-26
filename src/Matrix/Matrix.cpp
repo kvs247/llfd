@@ -108,6 +108,22 @@ double Matrix::at(size_t i, size_t j) const
   return data[j + i * nCols];
 }
 
+Matrix Matrix::transpose() const
+{
+  std::vector<double> newData;
+  newData.reserve(nCols * nRows);
+
+  for (size_t i = 0; i < nCols; ++i)
+  {
+    for (size_t j = 0; j < nRows; ++j)
+    {
+      newData.push_back(data[i + j * nCols]);
+    }
+  }
+
+  return Matrix(newData, nCols, nRows);
+}
+
 // operators
 Matrix &Matrix::operator=(const Matrix &other)
 {

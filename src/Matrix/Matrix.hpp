@@ -23,6 +23,7 @@ public:
 
   void print(std::ostream &os) const;
   double at(size_t i, size_t j) const;
+  Matrix transpose() const;
 
   Matrix &operator=(const Matrix &);
   bool operator==(const Matrix &) const;

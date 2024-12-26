@@ -87,6 +87,17 @@ TEST(Matrix, AtWithInvalidInput)
   EXPECT_THROW(m1.at(3, 0), std::out_of_range);
 }
 
+TEST(Matrix, Transpose)
+{
+  Matrix m({{1, 2, 3}, {4, 5, 6}});
+  Matrix mt({{1, 4}, {2, 5}, {3, 6}});
+
+  m.print(std::cout);
+  m.transpose().print(std::cout);
+
+  EXPECT_EQ(m.transpose(), mt);
+}
+
 // operators
 TEST(Matrix, Assignment)
 {
