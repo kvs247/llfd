@@ -4,6 +4,27 @@
 #include "../Matrix/Matrix.hpp"
 #include "GramSchmidt.hpp"
 
+TEST(QRGramSchmidt, QRDecomposition)
+{
+  Matrix m({{12, -51, 4}, {6, 167, -68}, {-4, 24, -41}});
+
+  Matrix expectedQ({{6.0 / 7, -69.0 / 175, -58.0 / 175}, {3.0 / 7, 158.0 / 175, 6.0 / 175}, {-2.0 / 7, 6.0 / 35, -33.0 / 35}});
+  Matrix expectedR({{14, 21, -14}, {0, 175, -70}, {0, 0, 35}});
+
+  std::cout << "AQ:\n";
+  expectedQ.print(std::cout);
+
+  std::cout << "AR:\n";
+  expectedR.print(std::cout);
+
+  const auto res = QR_GS::GramSchmidtDecompositon(m);
+  const auto q = res.first;
+  const auto r = res.second;
+
+  EXPECT_EQ(q, expectedQ);
+  EXPECT_EQ(r, expectedR);
+}
+
 TEST(QRGramSchmidt, ProjAU)
 {
   std::vector<double> v1({3, 4});
@@ -18,7 +39,7 @@ TEST(QRGramSchmidt, InnerProduct)
 {
   std::vector<double> v1({0.5, 1.2, -3.14});
   std::vector<double> v2({0, 0.8, 9.8});
-  
+
   double expectedResult = -29.812;
 
   EXPECT_EQ(QR_GS::innerProduct(v1, v2), expectedResult);
@@ -30,4 +51,12 @@ TEST(QRGramSchmidt, InnerProductInvalidInput)
   std::vector<double> v2({1, 2, 5, 7});
 
   EXPECT_THROW(QR_GS::innerProduct(v1, v2), std::invalid_argument);
+}
+
+TEST(QRGramSchmidt, NormalizeVector)
+{
+  std::vector<double> v({3, 4, 12});
+  std::vector<double> expectedV({3.0 / 13, 4.0 / 13, 12.0 / 13});
+
+  EXPECT_EQ(QR_GS::normalize(v), expectedV);
 }
