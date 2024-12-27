@@ -1,3 +1,4 @@
+#include <cmath>
 #include <initializer_list>
 #include <iostream>
 #include <span>
@@ -5,6 +6,7 @@
 #include <vector>
 
 #include "Matrix.hpp"
+#include "config.hpp"
 
 // constructors
 Matrix::Matrix(const Vector2D &rows) : nRows(rows.size()), nCols(rows.begin()->size())
@@ -141,7 +143,16 @@ bool Matrix::operator==(const Matrix &other) const
     return false;
   }
 
-  return this->data == other.data;
+  for (size_t i = 0; i < this->data.size(); ++i)
+  {
+    const double diff = this->data[i] - other.data[i];
+    if (std::abs(diff) > config::comparisonMaxDiff)
+    {
+      return false;
+    }
+  }
+
+  return true;
 };
 
 Matrix &Matrix::operator+=(const Matrix &other)

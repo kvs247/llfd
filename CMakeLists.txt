@@ -29,8 +29,8 @@ target_link_libraries(
 
 add_executable(
   qr_gs_test
-  src/QR/testGramSchmidt.cpp
-  src/QR/GramSchmidt.cpp
+  src/QR/GramSchmidt/testGramSchmidt.cpp
+  src/QR/GramSchmidt/GramSchmidt.cpp
   src/Matrix/Matrix.cpp
 )
 target_link_libraries(

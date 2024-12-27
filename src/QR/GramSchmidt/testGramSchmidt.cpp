@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <stdexcept>
 
-#include "../Matrix/Matrix.hpp"
+#include "../../Matrix/Matrix.hpp"
 #include "GramSchmidt.hpp"
 
 TEST(QRGramSchmidt, QRDecomposition)

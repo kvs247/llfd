@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <utility>
 
-#include "../Matrix/Matrix.hpp"
+#include "../../Matrix/Matrix.hpp"
 #include "GramSchmidt.hpp"
 
 std::pair<Matrix, Matrix> QR_GS::GramSchmidtDecompositon(const Matrix &m)
