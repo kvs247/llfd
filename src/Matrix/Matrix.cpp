@@ -1,5 +1,6 @@
 #include <cmath>
 #include <initializer_list>
+#include <iomanip>
 #include <iostream>
 #include <span>
 #include <stdexcept>
@@ -81,7 +82,8 @@ bool Matrix::isSameDimension(const Matrix &m1, const Matrix &m2)
   return m1.nRows == m2.nRows && m1.nCols == m2.nCols;
 }
 
-Matrix Matrix::makeIdentityMatrix(const size_t n) {
+Matrix Matrix::makeIdentityMatrix(const size_t n)
+{
   std::vector<double> data(n * n, 0.0);
   for (size_t i = 0; i < n; ++i)
   {
@@ -91,8 +93,10 @@ Matrix Matrix::makeIdentityMatrix(const size_t n) {
 }
 
 // public methods
-void Matrix::print(std::ostream &os) const
+void Matrix::print(std::ostream &os = std::cout) const
 {
+  os << std::fixed << std::setprecision(3);
+
   for (size_t i = 0; i < data.size(); ++i)
   {
     if (i % nCols == 0)
@@ -100,7 +104,7 @@ void Matrix::print(std::ostream &os) const
       os << "|";
     }
 
-    os << " " << data[i];
+    os << std::setw(8) << data[i];
 
     if ((i + 1) % nCols == 0)
     {
