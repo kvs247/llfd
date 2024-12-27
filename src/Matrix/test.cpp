@@ -87,13 +87,20 @@ TEST(Matrix, AtWithInvalidInput)
   EXPECT_THROW(m1.at(3, 0), std::out_of_range);
 }
 
-TEST(Matrix, Transpose)
+TEST(Matrix, InPlaceTranspose)
 {
   Matrix m({{1, 2, 3}, {4, 5, 6}});
   Matrix mt({{1, 4}, {2, 5}, {3, 6}});
 
-  m.print(std::cout);
-  m.transpose().print(std::cout);
+  m.transpose();
+
+  EXPECT_EQ(m, mt);
+}
+
+TEST(Matrix, ConstTranspose)
+{
+  Matrix m({{1, 2, 3}, {4, 5, 6}});
+  Matrix mt({{1, 4}, {2, 5}, {3, 6}});
 
   EXPECT_EQ(m.transpose(), mt);
 }

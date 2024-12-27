@@ -110,6 +110,26 @@ double Matrix::at(size_t i, size_t j) const
   return data[j + i * nCols];
 }
 
+// should do this without using `newData` intermediate memory
+Matrix &Matrix::transpose()
+{
+  std::vector<double> newData;
+  newData.reserve(nCols * nRows);
+
+  for (size_t i = 0; i < nCols; ++i)
+  {
+    for (size_t j = 0; j < nRows; ++j)
+    {
+      newData.push_back(data[i + j * nCols]);
+    }
+  }
+
+  this->data = newData;
+  std::swap(this->nRows, this->nCols);
+
+  return *this;
+}
+
 Matrix Matrix::transpose() const
 {
   std::vector<double> newData;
