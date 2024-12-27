@@ -10,25 +10,25 @@
 std::pair<Matrix, Matrix> QR_GS::qrDecomp(const Matrix &m)
 {
   const auto cols = m.getCols();
+  auto firstCol = cols.front();
 
-  std::vector<std::vector<double>> uVecs;
-  std::vector<std::vector<double>> newBasis;
+  std::vector<std::vector<double>> uVecs({firstCol});
+  std::vector<std::vector<double>> newBasis({normalize(firstCol)});
 
-  for (size_t i = 0; i < cols.size(); ++i)
+  for (size_t i = 1; i < cols.size(); ++i)
   {
-    auto newU = cols[i];
-    auto c = cols[i];
+    auto col = cols[i];
+    const auto firstThisUVec = subtractVectors(col, projAOntoU(col, uVecs.front()));
+    std::vector<std::vector<double>> thisUVecs({firstThisUVec});
 
-    for (size_t j = 0; j < i; ++j)
+    for (size_t k = 1; k < i; ++k)
     {
-      auto proj = projAOntoU(c, uVecs[j]);
-      for (size_t k = 0; k < newU.size(); ++k)
-      {
-        newU[k] -= proj[k];
-      }
+      const auto newThisUVec = subtractVectors(thisUVecs.back(), projAOntoU(thisUVecs.back(), uVecs[k]));
+      thisUVecs.push_back(newThisUVec);
     }
-    uVecs.push_back(newU);
-    newBasis.push_back(QR_GS::normalize(newU));
+
+    uVecs.push_back(thisUVecs.back());
+    newBasis.push_back(QR_GS::normalize(thisUVecs.back()));
   }
 
   const auto q = Matrix(newBasis).transpose();
@@ -41,6 +41,11 @@ std::vector<double> QR_GS::projAOntoU(std::vector<double> &a, std::vector<double
 {
   const auto ua = innerProduct(u, a);
   const auto uu = innerProduct(u, u);
+
+  if (uu == 0)
+  {
+    return std::vector(u.size(), 0.0);
+  }
 
   auto res = u;
   std::transform(res.cbegin(), res.cend(), res.begin(), [&](double x) { return ua / uu * x; });
@@ -72,6 +77,11 @@ std::vector<double> QR_GS::normalize(std::vector<double> &v)
   }
   norm = std::sqrt(norm);
 
+  if (norm == 0)
+  {
+    return v;
+  }
+
   for (auto &x : v)
   {
     x /= norm;
@@ -102,4 +112,20 @@ Matrix QR_GS::computeR(const std::vector<std::vector<double>> &basis, const std:
     }
   }
   return Matrix(rData, n, n);
+}
+
+std::vector<double> QR_GS::subtractVectors(const std::vector<double> &v1, const std::vector<double> &v2)
+{
+  if (v1.size() != v2.size())
+  {
+    throw std::invalid_argument("Vectors must be equal length for subtraction");
+  }
+
+  const size_t n = v1.size();
+  std::vector<double> res(n);
+  for (size_t i = 0; i < n; ++i)
+  {
+    res[i] = v1[i] - v2[i];
+  }
+  return res;
 }
