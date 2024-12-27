@@ -13,6 +13,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(llfd
   src/main.cpp
   src/Matrix/Matrix.cpp
+  src/QR/GramSchmidt/GramSchmidt.cpp
 )
 
 enable_testing()

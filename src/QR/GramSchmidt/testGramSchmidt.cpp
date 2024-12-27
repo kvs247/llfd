@@ -11,13 +11,7 @@ TEST(QRGramSchmidt, QRDecomposition)
   Matrix expectedQ({{6.0 / 7, -69.0 / 175, -58.0 / 175}, {3.0 / 7, 158.0 / 175, 6.0 / 175}, {-2.0 / 7, 6.0 / 35, -33.0 / 35}});
   Matrix expectedR({{14, 21, -14}, {0, 175, -70}, {0, 0, 35}});
 
-  std::cout << "AQ:\n";
-  expectedQ.print(std::cout);
-
-  std::cout << "AR:\n";
-  expectedR.print(std::cout);
-
-  const auto res = QR_GS::GramSchmidtDecompositon(m);
+  const auto res = QR_GS::qrDecomp(m);
   const auto q = res.first;
   const auto r = res.second;
 

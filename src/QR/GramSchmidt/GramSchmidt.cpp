@@ -7,12 +7,12 @@
 #include "../../Matrix/Matrix.hpp"
 #include "GramSchmidt.hpp"
 
-std::pair<Matrix, Matrix> QR_GS::GramSchmidtDecompositon(const Matrix &m)
+std::pair<Matrix, Matrix> QR_GS::qrDecomp(const Matrix &m)
 {
   const auto cols = m.getCols();
 
   std::vector<std::vector<double>> uVecs;
-  std::vector<std::vector<double>> eVecs;
+  std::vector<std::vector<double>> newBasis;
 
   for (size_t i = 0; i < cols.size(); ++i)
   {
@@ -28,37 +28,11 @@ std::pair<Matrix, Matrix> QR_GS::GramSchmidtDecompositon(const Matrix &m)
       }
     }
     uVecs.push_back(newU);
-    eVecs.push_back(QR_GS::normalize(newU));
+    newBasis.push_back(QR_GS::normalize(newU));
   }
 
-  Matrix mm(eVecs);
-  Matrix q = mm.transpose();
-  std::cout << "Q:\n";
-  q.print(std::cout);
-
-  const auto n = m.getNCols();
-  std::vector<double> rData(n * n);
-  for (size_t i = 0; i < n; ++i)
-  {
-    for (size_t j = 0; j < n; ++j)
-    {
-      if (j > i)
-      {
-        // std::cout << "yes";
-        rData[i * n + j] = 0;
-      }
-
-      auto val = innerProduct(eVecs[i], cols[j]);
-      if (std::abs(val) < 1e-10)
-      {
-        val = 0;
-      }
-      rData[i * n + j] = val;
-    }
-  }
-  Matrix r(rData, n, n);
-  std::cout << "R:\n";
-  r.print(std::cout);
+  const auto q = Matrix(newBasis).transpose();
+  const auto r = computeR(newBasis, cols);
 
   return {q, r};
 }
@@ -104,4 +78,28 @@ std::vector<double> QR_GS::normalize(std::vector<double> &v)
   }
 
   return v;
+}
+
+Matrix QR_GS::computeR(const std::vector<std::vector<double>> &basis, const std::vector<std::vector<double>> &cols)
+{
+  const auto n = basis.size();
+  std::vector<double> rData(n * n);
+  for (size_t i = 0; i < n; ++i)
+  {
+    for (size_t j = 0; j < n; ++j)
+    {
+      if (j > i)
+      {
+        rData[i * n + j] = 0;
+      }
+
+      auto val = innerProduct(basis[i], cols[j]);
+      if (std::abs(val) < 1e-10)
+      {
+        val = 0;
+      }
+      rData[i * n + j] = val;
+    }
+  }
+  return Matrix(rData, n, n);
 }
