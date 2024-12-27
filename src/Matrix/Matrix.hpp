@@ -20,11 +20,12 @@ public:
   size_t getNCols() const;
   Vector2D getRows() const;
   Vector2D getCols() const;
+  std::vector<double> getData() const;
 
   static bool isSameDimension(const Matrix &m1, const Matrix &m2);
   static Matrix makeIdentityMatrix(const size_t n);
 
-  void print(std::ostream &os) const;
+  void print(std::ostream &os = std::cout) const;
   double at(size_t i, size_t j) const;
   Matrix &transpose();
   Matrix transpose() const;

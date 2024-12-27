@@ -76,6 +76,8 @@ Vector2D Matrix::getCols() const
   return cols;
 }
 
+std::vector<double> Matrix::getData() const { return data; }
+
 // static methods
 bool Matrix::isSameDimension(const Matrix &m1, const Matrix &m2)
 {
@@ -93,7 +95,7 @@ Matrix Matrix::makeIdentityMatrix(const size_t n)
 }
 
 // public methods
-void Matrix::print(std::ostream &os = std::cout) const
+void Matrix::print(std::ostream &os) const
 {
   os << std::fixed << std::setprecision(3);
 

@@ -13,7 +13,8 @@ FetchContent_MakeAvailable(googletest)
 add_executable(llfd
   src/main.cpp
   src/Matrix/Matrix.cpp
-  src/QR/GramSchmidt/GramSchmidt.cpp
+  src/QRDecomp/GramSchmidt/GramSchmidt.cpp
+  src/QRAlgo/QRAlgo.cpp
 )
 
 enable_testing()
@@ -30,8 +31,8 @@ target_link_libraries(
 
 add_executable(
   qr_gs_test
-  src/QR/GramSchmidt/testGramSchmidt.cpp
-  src/QR/GramSchmidt/GramSchmidt.cpp
+  src/QRDecomp/GramSchmidt/test.cpp
+  src/QRDecomp/GramSchmidt/GramSchmidt.cpp
   src/Matrix/Matrix.cpp
 )
 target_link_libraries(

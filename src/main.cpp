@@ -1,7 +1,8 @@
 #include <iostream>
 
 #include "Matrix/Matrix.hpp"
-#include "QR/GramSchmidt/GramSchmidt.hpp"
+#include "QRDecomp/GramSchmidt/GramSchmidt.hpp"
+#include "QRAlgo/QRAlgo.hpp"
 
 int main()
 {
@@ -30,4 +31,7 @@ int main()
   r.print(std::cout);
   std::cout << "Q * R:\n";
   qr.print(std::cout);
+
+  std::cout << "\nQR Algo:\n";
+  QR_Algo::qrAlgo(m);
 }
