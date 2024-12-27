@@ -81,6 +81,15 @@ bool Matrix::isSameDimension(const Matrix &m1, const Matrix &m2)
   return m1.nRows == m2.nRows && m1.nCols == m2.nCols;
 }
 
+Matrix Matrix::makeIdentityMatrix(const size_t n) {
+  std::vector<double> data(n * n, 0.0);
+  for (size_t i = 0; i < n; ++i)
+  {
+    data[i * n + i] = 1.0;
+  }
+  return Matrix(data, n, n);
+}
+
 // public methods
 void Matrix::print(std::ostream &os) const
 {

@@ -66,6 +66,15 @@ TEST(Matrix, IsSameDimension)
   EXPECT_FALSE(Matrix::isSameDimension(m2, m3));
 }
 
+TEST(Matrix, MakeIdentityMatrix)
+{
+  size_t dim = 4;
+
+  Matrix expected({{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}});
+
+  EXPECT_EQ(Matrix::makeIdentityMatrix(dim), expected);
+}
+
 // public methods
 TEST(Matrix, AtWithValidInput)
 {

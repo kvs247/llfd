@@ -22,6 +22,7 @@ public:
   Vector2D getCols() const;
 
   static bool isSameDimension(const Matrix &m1, const Matrix &m2);
+  static Matrix makeIdentityMatrix(const size_t n);
 
   void print(std::ostream &os) const;
   double at(size_t i, size_t j) const;
