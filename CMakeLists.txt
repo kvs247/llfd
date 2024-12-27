@@ -27,5 +27,17 @@ target_link_libraries(
   gtest gtest_main
 )
 
+add_executable(
+  qr_gs_test
+  src/QR/testGramSchmidt.cpp
+  src/QR/GramSchmidt.cpp
+  src/Matrix/Matrix.cpp
+)
+target_link_libraries(
+  qr_gs_test
+  gtest gtest_main
+)
+
 include(GoogleTest)
 gtest_discover_tests(matrix_test)
+gtest_discover_tests(qr_gs_test)
