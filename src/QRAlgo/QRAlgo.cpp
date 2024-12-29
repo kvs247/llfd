@@ -1,9 +1,12 @@
 #include <iostream>
+#include <map>
+#include <vector>
 
-#include "QRAlgo.hpp"
 #include "../QRDecomp/GramSchmidt/GramSchmidt.hpp"
+#include "QRAlgo.hpp"
 
-void QR_Algo::qrAlgo(Matrix &m) {
+std::map<double, std::vector<std::vector<double>>> QR_Algo::qrAlgo(Matrix &m)
+{
   const int ITERATIONS = 20;
 
   Matrix u = Matrix::makeIdentityMatrix(m.getNCols());
@@ -17,11 +20,7 @@ void QR_Algo::qrAlgo(Matrix &m) {
 
     lastM = m;
     m = r * q;
-
     u *= q;
-
-    std::cout << k << ":\n";
-    m.print(std::cout);
   }
 
   auto newData = m.getData();
@@ -34,9 +33,21 @@ void QR_Algo::qrAlgo(Matrix &m) {
     }
     newData[i] /= lastMData[i];
   }
-  std::cout << "ratio:\n";
-  Matrix(newData, m.getNRows(), m.getNCols()).print(std::cout);
+  const Matrix lastTwoRatio(newData, m.getNRows(), m.getNCols());
 
-  std::cout << "U:\n";
-  u.print();
+  const auto orderedEigenVals = lastTwoRatio.getDiagonal();
+  const auto orderedEigenVectors = u.getCols();
+
+  if (orderedEigenVals.size() != orderedEigenVectors.size())
+  {
+    throw std::runtime_error("orderedEigenVals and orderedEigenVectos have unequal size");
+  }
+
+  std::map<double, std::vector<std::vector<double>>> res;
+  for (size_t i = 0; i < orderedEigenVals.size(); ++i)
+  {
+    auto &entry = res[orderedEigenVals[i]];
+    entry.push_back(orderedEigenVectors[i]);
+  }
+  return res;
 }

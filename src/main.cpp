@@ -33,5 +33,20 @@ int main()
   qr.print(std::cout);
 
   std::cout << "\nQR Algo:\n";
-  QR_Algo::qrAlgo(m);
+  const auto res = QR_Algo::qrAlgo(m);
+
+  for (const auto &x : res)
+  {
+    std::cout << "λ = " << x.first << "\n";
+    for (auto &v : x.second)
+    {
+      std::cout << "\t[ ";
+      for (const auto &ele : v)
+      {
+        std::cout << ele << " ";
+      }
+      std::cout << "]\n";
+    }
+    std::cout << "\n";
+  }
 }
