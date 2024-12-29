@@ -78,7 +78,22 @@ Vector2D Matrix::getCols() const
 
 std::vector<double> Matrix::getData() const { return data; }
 
-// static methods
+std::vector<double> Matrix::getDiagonal() const {
+  if (!this->isSquare())
+  {
+    throw std::invalid_argument("Cannot get diagonal of non-square matrix");
+  }
+  
+  std::vector<double> res(nCols);
+  for (size_t i = 0; i < nCols; ++i)
+  {
+    res[i] = this->at(i, i);
+  }
+  return res;
+}
+
+bool Matrix::isSquare(const Matrix &m) { return m.getNRows() == m.getNCols(); }
+
 bool Matrix::isSameDimension(const Matrix &m1, const Matrix &m2)
 {
   return m1.nRows == m2.nRows && m1.nCols == m2.nCols;

@@ -54,7 +54,36 @@ TEST(Matrix, CanCreateValidMatrix1D)
 
 TEST(Matrix, ThrowsOnCreateInvalidMatrix1D) { EXPECT_THROW(Matrix m({1, 2, 3, 4, 5}, 3, 2), std::invalid_argument); }
 
-// static methods
+// getters
+TEST(Matrix, GetDiagonal)
+{
+  Matrix m({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+
+  const std::vector<double> expected{1, 5, 9};
+
+  EXPECT_EQ(m.getDiagonal(), expected);
+}
+
+TEST(Matrix, GetDiagonalNonSquareMatrix)
+{
+  Matrix m({{1, 2, 3}, {4, 5, 6}});
+
+  EXPECT_THROW(m.getDiagonal(), std::invalid_argument);
+}
+
+// public methods
+TEST(Matrix, IsSquare)
+{
+  Matrix m1({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+  Matrix m2({{1, 2, 3}, {4, 5, 6}});
+
+  EXPECT_TRUE(Matrix::isSquare(m1));
+  EXPECT_TRUE(m1.isSquare());
+
+  EXPECT_FALSE(Matrix::isSquare(m2));
+  EXPECT_FALSE(m2.isSquare());
+}
+
 TEST(Matrix, IsSameDimension)
 {
   Matrix m1({{1, 2}, {3, 4}, {5, 6}});
@@ -75,7 +104,6 @@ TEST(Matrix, MakeIdentityMatrix)
   EXPECT_EQ(Matrix::makeIdentityMatrix(dim), expected);
 }
 
-// public methods
 TEST(Matrix, AtWithValidInput)
 {
   Matrix m1({{1, 2}, {3, 4}, {5, 6}});

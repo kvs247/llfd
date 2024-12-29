@@ -21,8 +21,12 @@ public:
   Vector2D getRows() const;
   Vector2D getCols() const;
   std::vector<double> getData() const;
+  std::vector<double> getDiagonal() const;
 
-  static bool isSameDimension(const Matrix &m1, const Matrix &m2);
+  static bool isSquare(const Matrix &);
+  bool isSquare() const { return isSquare(*this); }
+
+  static bool isSameDimension(const Matrix &, const Matrix &);
   static Matrix makeIdentityMatrix(const size_t n);
 
   void print(std::ostream &os = std::cout) const;
