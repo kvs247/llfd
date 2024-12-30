@@ -1,9 +1,8 @@
 #pragma once
 
+#include <kmath/Matrix/Matrix.hpp>
 #include <utility>
 #include <vector>
-
-#include "../../Matrix/Matrix.hpp"
 
 class QR_GS
 {

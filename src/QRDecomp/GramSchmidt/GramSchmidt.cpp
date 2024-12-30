@@ -1,10 +1,10 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <kmath/Matrix/Matrix.hpp>
 #include <stdexcept>
 #include <utility>
 
-#include "../../Matrix/Matrix.hpp"
 #include "GramSchmidt.hpp"
 
 std::pair<Matrix, Matrix> QR_GS::qrDecomp(const Matrix &m)

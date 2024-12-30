@@ -1,8 +1,8 @@
 #include <iostream>
+#include <kmath/Matrix/Matrix.hpp>
 
-#include "Matrix/Matrix.hpp"
-#include "QRDecomp/GramSchmidt/GramSchmidt.hpp"
 #include "QRAlgo/QRAlgo.hpp"
+#include "QRDecomp/GramSchmidt/GramSchmidt.hpp"
 
 int main()
 {

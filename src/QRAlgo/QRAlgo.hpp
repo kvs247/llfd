@@ -1,9 +1,8 @@
 #pragma once
 
+#include <kmath/Matrix/Matrix.hpp>
 #include <map>
 #include <vector>
-
-#include "../Matrix/Matrix.hpp"
 
 class QR_Algo
 {
