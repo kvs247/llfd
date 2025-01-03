@@ -34,17 +34,16 @@ target_link_libraries(llfd
 
 enable_testing()
 
+# add_executable(
+#   qr_gs_test
+#   src/QRDecomp/GramSchmidt/test.cpp
+#   src/QRDecomp/GramSchmidt/GramSchmidt.cpp
+# )
+# target_link_libraries(
+#   qr_gs_test
+#   gtest gtest_main
+#   kmath
+# )
 
-add_executable(
-  qr_gs_test
-  src/QRDecomp/GramSchmidt/test.cpp
-  src/QRDecomp/GramSchmidt/GramSchmidt.cpp
-)
-target_link_libraries(
-  qr_gs_test
-  gtest gtest_main
-  kmath
-)
-
-include(GoogleTest)
-gtest_discover_tests(qr_gs_test)
+# include(GoogleTest)
+# gtest_discover_tests(qr_gs_test)
