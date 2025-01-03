@@ -1,11 +1,13 @@
 #include <iostream>
+#include <kmath/Matrix/Matrix.hpp>
+#include <kmath/Matrix/Vector.hpp>
 #include <map>
 #include <vector>
 
 #include "../QRDecomp/GramSchmidt/GramSchmidt.hpp"
 #include "QRAlgo.hpp"
 
-std::map<double, std::vector<std::vector<double>>> QR_Algo::qrAlgo(Matrix &m)
+std::map<double, std::vector<Vector>> QR_Algo::qrAlgo(Matrix &m)
 {
   const int ITERATIONS = 20;
 
@@ -43,11 +45,11 @@ std::map<double, std::vector<std::vector<double>>> QR_Algo::qrAlgo(Matrix &m)
     throw std::runtime_error("orderedEigenVals and orderedEigenVectos have unequal size");
   }
 
-  std::map<double, std::vector<std::vector<double>>> res;
+  std::map<double, std::vector<Vector>> res;
   for (size_t i = 0; i < orderedEigenVals.size(); ++i)
   {
     auto &entry = res[orderedEigenVals[i]];
-    entry.push_back(orderedEigenVectors[i]);
+    entry.push_back(*orderedEigenVectors[i]);
   }
   return res;
 }

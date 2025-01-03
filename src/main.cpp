@@ -41,9 +41,9 @@ int main()
     for (auto &v : x.second)
     {
       std::cout << "\t[ ";
-      for (const auto &ele : v)
+      for (size_t i = 0; i < v.size(); ++i)
       {
-        std::cout << ele << " ";
+        std::cout << v.at(i) << " ";
       }
       std::cout << "]\n";
     }

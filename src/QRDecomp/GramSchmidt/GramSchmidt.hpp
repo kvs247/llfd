@@ -1,6 +1,7 @@
 #pragma once
 
 #include <kmath/Matrix/Matrix.hpp>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -8,9 +9,5 @@ class QR_GS
 {
 public:
   static std::pair<Matrix, Matrix> qrDecomp(const Matrix &);
-  static std::vector<double> projAOntoU(std::vector<double> &a, std::vector<double> &u);
-  static double innerProduct(const std::vector<double> &v, const std::vector<double> &w);
-  static std::vector<double> normalize(std::vector<double> &v);
-  static Matrix computeR(const std::vector<std::vector<double>> &basis, const std::vector<std::vector<double>> &cols);
-  static std::vector<double> subtractVectors(const std::vector<double> &, const std::vector<double> &);
+  static Matrix computeR(const std::vector<Vector> &basis, const std::vector<std::shared_ptr<Vector>> &colPtrs);
 };
