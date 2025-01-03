@@ -20,8 +20,6 @@ FetchContent_MakeAvailable(googletest kmath)
 
 add_executable(llfd
   src/main.cpp
-  src/QRDecomp/GramSchmidt/GramSchmidt.cpp
-  src/QRAlgo/QRAlgo.cpp
 )
 target_include_directories(llfd
   PRIVATE
