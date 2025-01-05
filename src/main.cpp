@@ -1,10 +1,48 @@
 #include <bitset>
+#include <iomanip>
 #include <iostream>
 #include <kmath/Matrix/Eigen.hpp>
 #include <kmath/Matrix/Matrix.hpp>
 #include <vector>
 
 #include <cmath>
+
+void printMatrixEigenstate(const Matrix &m, const std::map<double, std::vector<Vector>> &eState)
+{
+  m.print();
+
+  const auto origFlags = std::cout.flags();
+  const auto origPrecision = std::cout.precision();
+  std::cout << std::fixed << std::setprecision(2);
+
+  std::vector<std::string> lines;
+  for (const auto &[eVal, eVecs] : eState)
+  {
+    for (size_t i = 0; i < eVecs[0].size(); ++i)
+    {
+      std::cout << "\t";
+      if (i == eVecs[0].size() / 2)
+      {
+        std::cout << "λ: " << eVal << " ";
+      }
+      else
+      {
+        std::cout << std::string(8, ' ');
+      }
+      std::cout << "|";
+      for (size_t j = 0; j < eVecs.size(); ++j)
+      {
+        std::cout << std::setw(5) << eVecs[j].at(i) << "|";
+        if (j < eVecs.size() - 1)
+        {
+          std::cout << "  |";
+        }
+      }
+      std::cout << "\n";
+    }
+    std::cout << "\n";
+  }
+}
 
 std::vector<Matrix> f()
 {
@@ -69,42 +107,11 @@ int main()
 {
   f();
 
-  // Matrix m({{12, -51, 4}, {6, 167, -68}, {-4, 24, -41}});
-  // Matrix m({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
-  // Matrix m({{2, -2, 18}, {2, 1, 0}, {1, 2, 0}});
-  // Matrix m({
-  //     {2, 0, -1, -1, 0},
-  //     {0, 0, 0, 0, 0},
-  //     {-1, 0, 1, 0, 0},
-  //     {-1, 0, 0, 1, 0},
-  //     {0, 0, 0, 0, 0},
-  // });
-
-  // Matrix m({
-  //     {1, -1, 0},
-  //     {-1, 2, -1},
-  //     {0, -1, 1},
-  // });
-
   for (const auto &m : f())
   {
-    m.print();
     const auto res = Eigen::compute(m);
 
-    for (const auto &x : res)
-    {
-      std::cout << "λ = " << x.first << "\n";
-      for (auto &v : x.second)
-      {
-        std::cout << "\t[ ";
-        for (size_t i = 0; i < v.size(); ++i)
-        {
-          std::cout << v.at(i) << " ";
-        }
-        std::cout << "]\n";
-      }
-      std::cout << "\n";
-    }
+    printMatrixEigenstate(m, res);
     std::cout << "\n";
   }
 }
